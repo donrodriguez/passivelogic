@@ -1,0 +1,14 @@
+POST http://localhost:5293//api/simulations/run
+Content-Type: application/json
+
+{
+  "AirTemperature": 310.0,
+  "AirVelocity": 5.0,
+  "SolarPanelLength": 2.0,
+  "SolarPanelSurfaceTemperature": 393.0,
+  "SolarIrradiation": 800.0,
+  "StorageTankHeight": 1.5,
+  "StorageTankRadius": 0.75,
+  "InitialTankFluidTemperature": 298.0,
+  "TankFluidMassFlowRate": 0.1
+}

@@ -1,0 +1,69 @@
+/*custom stuff*/
+/*@font-face {*/
+/*  font-family: "Inter";*/
+/*  src: url("../../public/fonts/Inter/static/Inter-Regular.ttf");*/
+/*}*/
+
+:root {
+  /* Color palette */
+  --color-primary: #fff;
+  --color-accent: #8DDBCB;
+  --color-emphasis: #2e4d48;
+  --color-headings: #fff;
+  --color-body: #fff;
+  --color-border: #ccc;
+  --color-border-2: #808080;
+  /*bg-gradient-to-bl from-blue-900 to-pink-800*/
+  --color-background: #222;
+  --color-background-darker: #000;
+  --add-icon-color: #1ec11e;
+  --add-icon-color-muted: #179517;
+  --color-accent-2: #007bff;
+  --color-accent-2-muted: #0056b3;
+  --color-destructive: #e12020;
+  --color-destructive-2: #971515;
+  --color-pending: #cea710;
+  --color-selection-bg: #f48112;
+  --color-selection-fg: #FAFAF9;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+/* TYPOGRAPHY */
+::selection {
+  background: var(--color-selection-bg);
+  color: var(--color-selection-fg);
+}
+
+html {
+  /*font-size: 62.5%;*/
+
+  /*background: var(--color-background-darker);*/
+  /*background: linear-gradient(to bottom right, #4533f6, #992257);*/
+}
+
+
+body {
+  /*min-height: 100vh;*/
+  font-family: Helvetica, sans-serif;
+  color: var(--color-body);
+  font-size: 1.6rem;
+  line-height: 1.5;
+}
+
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
