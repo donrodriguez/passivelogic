@@ -4,6 +4,7 @@ using PhysicsSimulationWebApi.Application.Simulations.SystemComponents;
 using PhysicsSimulationWebApi.Application.Simulations.SystemComponents.Air;
 using PhysicsSimulationWebApi.Application.Simulations.SystemComponents.Water;
 using PhysicsSimulationWebApi.Application.Simulations.Theoretical;
+using PhysicsSimulationWebApi.Shared;
 using Environment = PhysicsSimulationWebApi.Application.Simulations.SystemComponents.Environment;
 
 namespace PhysicsSimulationWebApi.Application.Simulations;
@@ -12,7 +13,7 @@ public sealed class Simulation
 {
     public Simulation() {}
 
-    public async Task<RunSimulationResponse> RunAsync(RunSimulationCommand command)
+    public async Task<Result<RunSimulationResponse>> RunAsync(RunSimulationCommand command)
     {
         // Energy Balance on Solar Collector
         // E_in - E_out = 0 (steady state)
@@ -74,7 +75,7 @@ public sealed class Simulation
             fluidTempToSolarPanel = tankTemp;
         }
         
-        return response;
+        return Result<RunSimulationResponse>.Success(response);
     }
 
     private decimal UsefulHeat(SolarPanel solarPanel, Environment environment, RunSimulationCommand command)

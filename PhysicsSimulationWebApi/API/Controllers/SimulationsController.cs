@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using PhysicsSimulationWebApi.Application.Simulations;
 using PhysicsSimulationWebApi.Application.Simulations.Commands.RunSimulation;
+using PhysicsSimulationWebApi.Shared;
 
 namespace PhysicsSimulationWebApi.Controllers;
 
@@ -16,13 +17,13 @@ public sealed class SimulationsController
     public async Task<Results<Ok<RunSimulationResponse>, BadRequest<string>, ProblemHttpResult>> RunAsync([FromBody] RunSimulationCommand command)
     {
         Simulation simulation = new();
-        RunSimulationResponse response = await simulation.RunAsync(command);
+        Result<RunSimulationResponse> response = await simulation.RunAsync(command);
         
-        // if (response is null)
-        // {
-        //     return TypedResults.Problem(detail: "Getting user account profile failed", statusCode: 500);
-        // }
+        if (response.IsFailure)
+        {
+            return TypedResults.Problem(detail: "Simulation Failed", statusCode: 500);
+        }
         
-        return TypedResults.Ok(response);
+        return TypedResults.Ok(response.Value);
     }
 }
