@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/donrodriguez/Documents/Work/PassiveLogic/PhysicsSimulationWebApi/API/API.csproj": {}
+    "/Users/don/Documents/PassiveLogic/PhysicsSimulationWebApi/API/API.csproj": {}
   },
   "projects": {
-    "/Users/donrodriguez/Documents/Work/PassiveLogic/PhysicsSimulationWebApi/API/API.csproj": {
+    "/Users/don/Documents/PassiveLogic/PhysicsSimulationWebApi/API/API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/donrodriguez/Documents/Work/PassiveLogic/PhysicsSimulationWebApi/API/API.csproj",
+        "projectUniqueName": "/Users/don/Documents/PassiveLogic/PhysicsSimulationWebApi/API/API.csproj",
         "projectName": "API",
-        "projectPath": "/Users/donrodriguez/Documents/Work/PassiveLogic/PhysicsSimulationWebApi/API/API.csproj",
-        "packagesPath": "/Users/donrodriguez/.nuget/packages/",
-        "outputPath": "/Users/donrodriguez/Documents/Work/PassiveLogic/PhysicsSimulationWebApi/API/obj/",
+        "projectPath": "/Users/don/Documents/PassiveLogic/PhysicsSimulationWebApi/API/API.csproj",
+        "packagesPath": "/Users/don/.nuget/packages/",
+        "outputPath": "/Users/don/Documents/PassiveLogic/PhysicsSimulationWebApi/API/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/donrodriguez/.nuget/NuGet/NuGet.Config"
+          "/Users/don/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -66,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/Users/don/.dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

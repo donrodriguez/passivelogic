@@ -11,12 +11,11 @@ public sealed class AverageConvectionCoefficient
     /// <param name="properties">Properites of fluid.</param>
     /// <param name="length">Length of the solar collector (m).</param>
     /// <returns>The average convection coefficient h (W/m^s-K) = (Nu * k) / L.</returns>
-    public static decimal Calculate(
-        decimal flowVelocity,
-        ThermophysicalProperties properties,
-        decimal length)
+    public static decimal Calculate(decimal flowVelocity, ThermophysicalProperties properties, decimal length)
     {
-        return (NusseltAverageAtLaminarFlow(flowVelocity, properties.KinematicViscosity, properties.Prandtl, length) * properties.KinematicViscosity) / length;
+        decimal nusselt = NusseltAverageAtLaminarFlow(flowVelocity, properties.KinematicViscosity, properties.Prandtl, length);
+        
+        return (nusselt * properties.KinematicViscosity) / length;
     }
 
     /// <summary>
@@ -33,8 +32,17 @@ public sealed class AverageConvectionCoefficient
         decimal prandtlNumber,
         decimal length)
     {
-        return 0.664M 
-               * (decimal)Math.Pow((double)ReynoldsNumber(flowVelocity, kinematicViscosity, length), 1.0 / 2.0)
+        decimal reynolds = ReynoldsNumber(flowVelocity, kinematicViscosity, length);
+
+        if (IsLaminar(reynolds))
+        {
+            return 0.664M 
+                   * (decimal)Math.Pow((double)reynolds, 1.0 / 2.0)
+                   * (decimal)Math.Pow((double)prandtlNumber, 1.0 / 3.0);
+        }
+
+        return 0.0296M
+               * (decimal)Math.Pow((double)reynolds, 4.0 / 5.0)
                * (decimal)Math.Pow((double)prandtlNumber, 1.0 / 3.0);
     }
 
@@ -48,5 +56,11 @@ public sealed class AverageConvectionCoefficient
     public static decimal ReynoldsNumber(decimal flowVelocity, decimal kinematicViscosity, decimal length)
     {
         return (flowVelocity * length) / kinematicViscosity;
+    }
+
+    public static bool IsLaminar(decimal reynoldsNumber)
+    {
+        decimal reynoldsTurbulentThreshold = 5.0M * 100000.0M;
+        return reynoldsNumber <= reynoldsTurbulentThreshold;
     }
 }

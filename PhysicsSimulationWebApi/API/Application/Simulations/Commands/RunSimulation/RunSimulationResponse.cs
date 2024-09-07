@@ -4,9 +4,15 @@ namespace PhysicsSimulationWebApi.Application.Simulations.Commands.RunSimulation
 
 public sealed class RunSimulationResponse
 {
+    [JsonPropertyName("DataPoints")]
+    public List<DataPoint>? DataPoints { get; set; }
+}
+
+public sealed class DataPoint
+{
     [JsonPropertyName("Time")]
-    public decimal[] Time { get; set; }
+    public decimal Time { get; set; }
     
     [JsonPropertyName("TankTemperature")]
-    public List<decimal> TankTemperature { get; set; }
-}
+    public decimal TankTemperature { get; set; }
+} 

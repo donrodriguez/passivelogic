@@ -5,7 +5,7 @@ namespace PhysicsSimulationWebApi.Application.Simulations.SystemComponents;
 public sealed class Environment
 {
     public decimal SolarIrradiation { get; set; } // G_s (W/m^s)
-    public decimal SkyTemperature { get; set; } // T_sky (K)
+    public decimal SkyTemperature { get; set; } = 263.15M; // T_sky (K)
     public decimal SkyAbsorptivity { get; set; } // dimensionless
     
     ///<summary>

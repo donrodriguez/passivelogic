@@ -18,7 +18,7 @@ public sealed class SimulationsController
         Simulation simulation = new();
         RunSimulationResponse response = await simulation.RunAsync(command);
         
-        // if (queryResult is null)
+        // if (response is null)
         // {
         //     return TypedResults.Problem(detail: "Getting user account profile failed", statusCode: 500);
         // }
