@@ -1,8 +1,8 @@
 # Variables
-DOCKER_IMAGE_NAME = skavengerz-internal-web-app
-DOCKER_IMAGE_TAG = 0.0.0
-DOCKER_CONTAINER_NAME = internal-web-app
-DOCKER_REGISTRY=us-central1-docker.pkg.dev
+DOCKER_IMAGE_NAME=passivelogic-physics-simulator-web-app
+DOCKER_IMAGE_TAG= 0.0.0
+DOCKER_CONTAINER_NAME=passivelogic-physics-simulator-web-app
+DOCKER_REGISTRY=donrodriguez
 
 .PHONY: build
 build:

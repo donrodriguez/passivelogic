@@ -28,7 +28,7 @@
 .load {
   width: 20px;
   height: 20px;
-  border: solid 2.5px var(--color-accent);
+  border: solid 2.5px var(--color-accent-2);
   border-radius: 50%;
   border-right-color: transparent;
   border-bottom-color: transparent;

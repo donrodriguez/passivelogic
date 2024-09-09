@@ -51,8 +51,8 @@ public sealed class Simulation
             DataPoint dataPoint = new();
             dataPoint.Time = i;
             
-            // Update the film temperature (average of inlet fluid and panel surface temperature)
-            decimal filmTemperature = (fluidTempToSolarPanel + solarPanel.SurfaceTemperature) / 2;
+            // average of inlet fluid and panel surface temperature)
+            decimal filmTemperature = (fluidTempToSolarPanel + solarPanel.SurfaceTemperature) / 2.0M;
             
             decimal outletSolarCollectorFluidTemp = OutletSolarCollectorFluidTemp(usefulHeat, storageTank.MassFlowRate, filmTemperature);
             

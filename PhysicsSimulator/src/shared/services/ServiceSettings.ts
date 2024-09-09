@@ -18,7 +18,7 @@ const isDebug = process.env.NODE_ENV === 'development'; // or any other appropri
 if (isDebug) {
     Configuration.scheme = Scheme.HTTP;
     Configuration.host = "localhost";
-    Configuration.port = "80";
+    Configuration.port = "5293";
 } else {
     Configuration.scheme = Scheme.HTTPS;
     Configuration.host = "";
