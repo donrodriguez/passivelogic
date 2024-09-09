@@ -11,7 +11,7 @@ build:
 
 .PHONY: build-amd
 build-amd:
-	docker buildx build -f PhysicsSimulationWebApi.API/Dockerfile -t $(DOCKER_USERNAME)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) .
+	docker buildx build -f API/Dockerfile -t $(DOCKER_USERNAME)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) .
 
 .PHONY: dev
 dev:

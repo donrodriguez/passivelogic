@@ -106,7 +106,6 @@ const handleError = (errorResponse: any) => {
       description: errorResponse.message,
       variant: 'destructive',
     });
-
   }
 
   state.value = State.Error;

@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # C# ASP.NET Core Web API Service
+  api:
+    image: mcr.microsoft.com/dotnet/aspnet:7.0 AS base # Use the appropriate ASP.NET Core runtime version
+    container_name: dotnet-api
+    build:
+      context: ./api  # Directory containing the .NET API project
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"  # Maps port 5000 on host to port 80 in container
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - app-network
+    depends_on:
+      - db  # If the API relies on a database service, include this (optional)
+
+  # Vue.js Frontend Service
+  vue:
+    image: node:16  # Use the Node.js base image
+    container_name: vue-frontend
+    build:
+      context: ./frontend  # Directory containing the Vue.js project
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"  # Maps port 8080 on the host to port 8080 in container
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./frontend:/app  # Mounts local frontend folder for hot reloading
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge

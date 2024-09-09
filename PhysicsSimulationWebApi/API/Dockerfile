@@ -6,15 +6,15 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY . .
-RUN dotnet restore Flo.sln
-WORKDIR /src/flo.API
+RUN dotnet restore PhysicsSimulationWebApi.sln
+WORKDIR /src/API
 
-RUN dotnet build "PhysicsSimulationWebApi.API.csproj" -c Release -o /app/build
+RUN dotnet build "API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "PhysicsSimulationWebApi.API.csproj" -c Release -o /app/publish
+RUN dotnet publish "API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "PhysicsSimulationWebApi.API.dll"]
+ENTRYPOINT ["dotnet", "API.dll"]
