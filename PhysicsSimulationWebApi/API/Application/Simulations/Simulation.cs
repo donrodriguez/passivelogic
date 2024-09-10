@@ -15,67 +15,79 @@ public sealed class Simulation
 
     public async Task<Result<RunSimulationResponse>> RunAsync(RunSimulationCommand command)
     {
-        // Energy Balance on Solar Collector
-        // E_in - E_out = 0 (steady state)
-        // Gs + Gatm - Qconv - Qu - E = 0
-
-        SolarPanel solarPanel = new(
-            command.SolarPanelLength,
-            command.SolarPanelSurfaceTemperature);
-        
-        Environment environment = new(
-             command.SolarIrradiation,
-             solarPanel.SolarAbsorptivity,
-             command.AirTemperature,
-             1.0M);
-
-        StorageTank storageTank = new(
-            command.StorageTankHeight,
-            command.StorageTankRadius,
-            command.InitialTankFluidTemperature,
-            WaterProperties.Density,
-            command.TankFluidMassFlowRate);
-        
-        // Qu = Gs + Gatm - Qconv - E (steady state)
-        decimal usefulHeat = UsefulHeat(solarPanel, environment, command);
-        
-        decimal secondsPerHour = 3600.0M;
-        decimal hoursPerDay = 24.0M;
-        var times = new decimal[(int)((hoursPerDay * secondsPerHour) + 1)];
-
-        RunSimulationResponse response = new();
-        
-        decimal fluidTempToSolarPanel = storageTank.InitialFluidTemperature;
-        for (int i = 0; i < times.Length; i++)
+        try
         {
-            DataPoint dataPoint = new();
-            dataPoint.Time = i;
-            
-            // average of inlet fluid and panel surface temperature)
-            decimal filmTemperature = (fluidTempToSolarPanel + solarPanel.SurfaceTemperature) / 2.0M;
-            
-            decimal outletSolarCollectorFluidTemp = OutletSolarCollectorFluidTemp(usefulHeat, storageTank.MassFlowRate, filmTemperature);
-            
-            decimal tankTemp = TankTemperature(
-                dataPoint.Time, 
-                outletSolarCollectorFluidTemp,
-                storageTank.InitialFluidTemperature,
-                storageTank.MassFlowRate,
-                storageTank.FluidMass);
-            
-            dataPoint.TankTemperature = tankTemp;
+            // Energy Balance on Solar Collector
+            // E_in - E_out = 0 (steady state)
+            // Gs + Gatm - Qconv - Qu - E = 0
 
-            if (response.DataPoints is null)
+            SolarPanel solarPanel = new(
+                command.SolarPanelLength,
+                command.SolarPanelSurfaceTemperature);
+
+            Environment environment = new(
+                command.SolarIrradiation,
+                solarPanel.SolarAbsorptivity,
+                command.AirTemperature,
+                1.0M);
+
+            StorageTank storageTank = new(
+                command.StorageTankHeight,
+                command.StorageTankRadius,
+                command.InitialTankFluidTemperature,
+                WaterProperties.Density,
+                command.TankFluidMassFlowRate);
+
+            // Qu = Gs + Gatm - Qconv - E (steady state)
+            decimal usefulHeat = UsefulHeat(solarPanel, environment, command);
+
+            decimal secondsPerHour = 3600.0M;
+            decimal hoursPerDay = 24.0M;
+            var times = new decimal[(int)((hoursPerDay * secondsPerHour) + 1)];
+
+            RunSimulationResponse response = new();
+
+            decimal fluidTempToSolarPanel = storageTank.InitialFluidTemperature;
+            for (int i = 0; i < times.Length; i++)
             {
-                response.DataPoints = new List<DataPoint>();
-            }
-            
-            response.DataPoints.Add(dataPoint);
+                DataPoint dataPoint = new();
+                dataPoint.Time = i;
 
-            fluidTempToSolarPanel = tankTemp;
+                // average of inlet fluid and panel surface temperature)
+                decimal filmTemperature = (fluidTempToSolarPanel + solarPanel.SurfaceTemperature) / 2.0M;
+
+                decimal outletSolarCollectorFluidTemp =
+                    OutletSolarCollectorFluidTemp(usefulHeat, storageTank.MassFlowRate, filmTemperature);
+
+                decimal tankTemp = TankTemperature(
+                    dataPoint.Time,
+                    outletSolarCollectorFluidTemp,
+                    storageTank.InitialFluidTemperature,
+                    storageTank.MassFlowRate,
+                    storageTank.FluidMass);
+
+                dataPoint.TankTemperature = tankTemp;
+
+                if (response.DataPoints is null)
+                {
+                    response.DataPoints = new List<DataPoint>();
+                }
+
+                response.DataPoints.Add(dataPoint);
+
+                fluidTempToSolarPanel = tankTemp;
+            }
+
+            return Result<RunSimulationResponse>.Success(response);
         }
-        
-        return Result<RunSimulationResponse>.Success(response);
+        catch (DivideByZeroException _)
+        {
+            return Result<RunSimulationResponse>.Failure(Error.DivideByZero);
+        }
+        catch (Exception e)
+        {
+            return Result<RunSimulationResponse>.Failure(new Error(e.Message));
+        }
     }
 
     private decimal UsefulHeat(SolarPanel solarPanel, Environment environment, RunSimulationCommand command)

@@ -19,10 +19,11 @@ if (isDebug) {
     Configuration.scheme = Scheme.HTTP;
     Configuration.host = "localhost";
     Configuration.port = "5293";
+
 } else {
-    Configuration.scheme = Scheme.HTTPS;
-    Configuration.host = "";
-    Configuration.port = "443";
+    Configuration.scheme = Scheme.HTTP;
+    Configuration.host = "localhost";
+    Configuration.port = "5293";
 }
 
 function endpoint(path: string): string {

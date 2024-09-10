@@ -12,6 +12,10 @@ build:
 build-amd:
 	docker buildx build --platform linux/amd64 -t $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) .
 
+.PHONY: build-arm
+build-arm:
+	docker buildx build --platform linux/arm64 -t $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) .
+
 .PHONY: dev
 dev:
 	docker run -it -p 8080:80 --name $(DOCKER_CONTAINER_NAME) $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
@@ -39,5 +43,5 @@ test:
 	make newimage dev
 
 push:
-	make clean build-amd
+	make clean build-arm
 	docker push $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)

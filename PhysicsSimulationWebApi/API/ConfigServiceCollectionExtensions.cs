@@ -15,7 +15,7 @@ public static class ConfigServiceCollectionExtensions
                     policy.WithOrigins(origin)
                         .WithHeaders("Content-Type")
                         .WithHeaders("Authorization")
-                        .AllowAnyMethod(); // TODO: remove in production
+                        .AllowAnyMethod();
                         
                 }
             );
